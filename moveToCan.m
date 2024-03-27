@@ -1,14 +1,5 @@
 % This m-file will move the end-effector such that the tip touches the top of rCan3.
-function [x,y,z,r,p,h] = moveToCan()
-%% Pseudo-code
-% get the pose of the model (rCan3)
-% get the current robot pose -> then get specific pose of the end effector
-% use ctraj to get multiple trajectories
-% get all the joint angles by working backwards
-% lots of action client/message stuff for ROS
-% use convert2ROSPointVec to get the goal
-% send ROS the trajectory
-% 
+function [x,y,z,r,p,h] = moveToCan
 
 masterhostIP = "192.168.183.128";
 rosshutdown;
@@ -53,9 +44,9 @@ traj_duration       = 2;     % Traj duration (secs)
 traj_goal = convert2ROSPointVec(mat_joint_traj,rob_joint_names,traj_steps,traj_duration,traj_goal);
 
 pause(5);
-sendGoal(rCan3_traj_act_client,traj_goal); %do we need to send it?
+sendGoal(rCan3_traj_act_client,traj_goal); 
 
-%[x,y,z,r,p,y] = traj_goal.Trajectory.Points.Positions(1);
+%[x,y,z,r,p,y] = traj_goal.Trajectory.Points.Positions(:);
 x = traj_goal.Trajectory.Points.Positions(1);
 y = traj_goal.Trajectory.Points.Positions(2);
 z = traj_goal.Trajectory.Points.Positions(3);
